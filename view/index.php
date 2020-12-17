@@ -22,11 +22,12 @@
     <head>
         <meta charset="UTF-8">
         <title>ToDoList</title>
-        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
         <div class="container">
             <h1>To Do List</h1>
+
             <div class="box-search-add">
                 <div class="box-search">
                    <form id="form_search" action="../view/index.php" method="GET">
@@ -40,6 +41,19 @@
                 <div class="box-add">
                     <a href="add.php"><button>ADD</button></a>
                 </div>
+            </div>
+            <div class="notify">
+                <?php
+                // Starting session
+                session_start();
+                
+
+                if(isset($_SESSION["message"])){
+                    echo "<p>".$_SESSION["message"]."</p>";
+                    unset($_SESSION["message"]);
+                }
+                
+                ?>
             </div>
             <table class="table_task" cellpadding="10">
                 <tr>
@@ -60,26 +74,34 @@
                         <td><?php echo $date_start ?></td>
                         <td><?php echo $date_end ?></td>
                         <td><?php echo $array_status[$value['status']] ?></td>
-                        <td><a href="add.php?task=<?php echo $value['id'] ?>">Edit</a>
-                        / <a onclick="return confirm('Are you sure you want to delete ?')" href="../controller/del.php?id=<?php echo $value['id'] ?>">Delete</a></td>
+                        <td>
+                            <a href="add.php?task=<?php echo $value['id'] ?>">Edit</a>
+                            / <a onclick="return confirm('Are you sure you want to delete ?')" href="../controller/del.php?id=<?php echo $value['id'] ?>">Delete</a>
+                        </td>
                     </tr>
                 <?php } ?>
             </table>
         </div>
         <script type="text/javascript">
             function check_form_serach(){
-                // day = document.getElementById("date_start").getDate();
+                if(document.getElementById("date_end").value == "" || document.getElementById("date_start").value == "")
+                {
+                    alert("Please enter a start date and end date");
+                    return;
+                }
 
-                // var date = new Date(document.getElementById("date_start").val());
-                // day = date.getDate();
-                // alert(day);
-                       
-                date =  document.getElementById("date_start").value();
-                alert(document.getElementById('date_start'));
-
+                /*check date start and date end*/
+                if(document.getElementById("date_end").value < document.getElementById("date_start").value)
+                {
+                    alert("The end date must not be less than the start date");
+                    return;
+                }
+                /*end: if(document.getElementById("date_end").value < document.getElementById("date_start").value)*/
+               
                 /*submit form*/
-                // document.getElementById("form_search").submit();
+                document.getElementById("form_search").submit();
             }
+            /*end: function check_form_serach()*/
         </script>
     </body>
 </html>

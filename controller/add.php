@@ -2,6 +2,9 @@
 	include '../model/connect.php';
     include '../model/model.php';
 
+    /*starting session*/ 
+	session_start();
+
 	/*get data form*/
 	$array_data = $_POST["data"];
 
@@ -21,11 +24,17 @@
 			$id = $array_data["id"];
 			edit($id, $name_task,$date_start, $date_end, $status);
 			header('Location: http://localhost/ToDoList/view/');
+			
+			/*create session */ 
+	  		$_SESSION["message"] = "Successful editing";
 		}
 		else{
 			/*add new task*/
 			add($name_task,$date_start, $date_end, $status);
 			header('Location: http://localhost/ToDoList/view/');
+			
+			/*create session */ 
+	  		$_SESSION["message"] = "Create successfully";
 		}
 		/*end: if($array_data["id"] != "")*/
 	}
@@ -33,4 +42,3 @@
 		header('Location: http://localhost/ToDoList/view/');
 	}
 	/*end: if($array_data != null)*/
-?>

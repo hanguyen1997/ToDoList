@@ -31,7 +31,7 @@
     <head>
         <meta charset="UTF-8">
         <title>ToDoList</title>
-        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
         <div class="container">
@@ -71,6 +71,14 @@
                     return;
                 }
                 /*end: if(document.getElementById("form_add").value == "")*/
+
+                /*check date*/
+                if(document.getElementById("date_end").value < document.getElementById("date_start").value)
+                {
+                    alert("The end date must not be less than the start date");
+                    return;
+                }
+                /*end: if(document.getElementById("date_end").value < document.getElementById("date_start").value)*/
                
                 /*submit form*/
                 document.getElementById("form_add").submit();

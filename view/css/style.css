@@ -41,3 +41,9 @@ input{
 .table_task tr td{
 	border: 1px solid;
 }
+.notify p {
+	text-align: center;
+    color: blue;
+    background-color: #eaeaea;
+    padding: 5px;
+}
