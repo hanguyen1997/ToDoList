@@ -1,0 +1,43 @@
+h1{
+	text-align: center;
+}
+input{
+	flex: 1;
+}
+.container{
+	width: 1024px;
+    margin: 0 auto;
+}
+
+.box-search-add{
+	display: flex;
+	justify-content: space-between;
+}
+.form_add{
+	width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: column;
+}
+.form-group{
+	display: flex;
+    flex-flow: row;
+    margin: 10px 0px;
+}
+.form-group label{
+	min-width: 80px;
+}
+.form-group select{
+	flex: 1;
+}
+.table_task{
+	text-align: center;
+	margin-top: 10px;
+	width: 100%;
+}
+.table_task tr th{
+	background-color: #a19898;
+}
+.table_task tr td{
+	border: 1px solid;
+}
