@@ -1,19 +1,21 @@
 <?php 
     include '../model/connect.php';
     include '../model/model.php';
+    
+
     $array_task = select();
     $array_status = array("1"=>"Planning", "2"=>"Doing", "3"=>"Complete");
 
     /*get date in URL*/
-    $date_start = "";
-    $date_end = "";
+    $date_start_search = "";
+    $date_end_search = "";
 
     if((isset($_GET["date_start"]) != "") || (isset($_GET["date_end"]) != ""))
     {
-        $date_start = $_GET["date_start"];
-        $date_end = $_GET["date_end"];
+        $date_start_search = $_GET["date_start"];
+        $date_end_search = $_GET["date_end"];
 
-        $array_task = select_task_by_date($date_start, $date_end);
+        $array_task = select_task_by_date($date_start_search, $date_end_search);
     }
     /*end: if((isset($_GET["date_start"]) != "") || (isset($_GET["date_end"]) != ""))*/
 ?>
@@ -27,14 +29,13 @@
     <body>
         <div class="container">
             <h1>To Do List</h1>
-
             <div class="box-search-add">
                 <div class="box-search">
                    <form id="form_search" action="../view/index.php" method="GET">
                         <label>Date start</label>
-                        <input type="date" id="date_start" name="date_start" value="<?php echo $date_start ?>">
+                        <input type="date" id="date_start" name="date_start" value="<?= $date_start_search ?>">
                         <label>Date end</label>
-                        <input type="date" id="date_end" name="date_end" value="<?php echo $date_end ?>">
+                        <input type="date" id="date_end" name="date_end" value="<?= $date_end_search ?>">
                         <button type="button" onclick="check_form_serach()">search</button>
                    </form>
                 </div>
@@ -47,11 +48,12 @@
                 // Starting session
                 session_start();
                 
-
-                if(isset($_SESSION["message"])){
+                if(isset($_SESSION["message"]))
+                {
                     echo "<p>".$_SESSION["message"]."</p>";
                     unset($_SESSION["message"]);
                 }
+                /*end: if(isset($_SESSION["message"]))*/
                 
                 ?>
             </div>
@@ -63,23 +65,35 @@
                     <th>Status</th>
                     <th>Optional</th>
                 </tr>
-                <?php foreach($array_task as $value) 
-                { 
-                    /*reformat the date*/
-                    $date_start = date("d-m-Y", strtotime($value['start_date']));
-                    $date_end = date("d-m-Y", strtotime($value['end_date']));
+                <?php 
+                /*check $array_task*/
+                if($array_task != Null)
+                {
+                    foreach($array_task as $value) 
+                    { 
+                        /*reformat the date*/
+                        $date_start = date("d-m-Y", strtotime($value['start_date']));
+                        $date_end = date("d-m-Y", strtotime($value['end_date']));
                 ?>
-                    <tr>
-                        <td><?php echo $value['name_task'] ?></td>
-                        <td><?php echo $date_start ?></td>
-                        <td><?php echo $date_end ?></td>
-                        <td><?php echo $array_status[$value['status']] ?></td>
-                        <td>
-                            <a href="add.php?task=<?php echo $value['id'] ?>">Edit</a>
-                            / <a onclick="return confirm('Are you sure you want to delete ?')" href="../controller/del.php?id=<?php echo $value['id'] ?>">Delete</a>
-                        </td>
-                    </tr>
-                <?php } ?>
+                        <tr>
+                            <td><?= $value['name_task'] ?></td>
+                            <td><?= $date_start ?></td>
+                            <td><?= $date_end ?></td>
+                            <td><?= $array_status[$value['status']] ?></td>
+                            <td>
+                                <a href="add.php?task=<?= $value['id'] ?>">Edit</a>
+                                / <a onclick="return confirm('Are you sure you want to delete ?')" href="../controller/del.php?id=<?= $value['id'] ?>">Delete</a>
+                            </td>
+                        </tr>
+                <?php 
+                    }
+                    /*end: foreach($array_task as $value)*/ 
+                }else
+                {
+                    echo" <tr><td colspan='5'>No data</td></tr>";
+                }
+                /*end:  if($array_task != Null)*/
+                ?>
             </table>
         </div>
         <script type="text/javascript">
@@ -89,6 +103,7 @@
                     alert("Please enter a start date and end date");
                     return;
                 }
+                /*end: if(document.getElementById("date_end").value == "" || document.getElementById("date_start").value == "")*/
 
                 /*check date start and date end*/
                 if(document.getElementById("date_end").value < document.getElementById("date_start").value)

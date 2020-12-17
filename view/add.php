@@ -39,15 +39,15 @@
             <form  class="form_add" id="form_add" action="../controller/add.php" method="POST">
                 <div class="form-group">
                     <label>Name Task</label>
-                    <input type="text" name="data[name_task]" class="form-control" id="name_task" value="<?php echo $name_task ?>" required  placeholder="Name task">
+                    <input type="text" name="data[name_task]" class="form-control" id="name_task" value="<?= $name_task ?>" required  placeholder="Name task">
                 </div>
                 <div class="form-group">
                     <label>Date start</label>
-                    <input type="date" name="data[date_start]" id="date_start" value="<?php echo $start_date ?>">
+                    <input type="date" name="data[date_start]" id="date_start" value="<?= $start_date ?>">
                 </div>
                 <div class="form-group">
                     <label>Date end</label>
-                    <input type="date" id="date_end" name="data[date_end]" value="<?php echo $date_end?>">
+                    <input type="date" id="date_end" name="data[date_end]" value="<?= $date_end ?>">
                 </div>
                 <div class="form-group">
                     <label>Status</label>
@@ -57,7 +57,7 @@
                         <option value="3" <?php if($status == 3) echo "selected" ?> >Complete</option>
                     </select>
                 </div>
-                <input type="hidden" name="data[id]" class="form-control" id="name_task" value="<?php echo $id; ?>">
+                <input type="hidden" name="data[id]" class="form-control" id="name_task" value="<?= $id; ?>">
                 <button type="button" onclick="checkform()" >Save</button>
             </form>
         </div>
